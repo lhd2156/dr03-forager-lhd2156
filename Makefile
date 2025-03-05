@@ -2,12 +2,12 @@
 ####################### Makefile Template ##############################
 ########################################################################
 # Student settings
-NAME = YOURNAME
-SID = YOURSID
-EMAIL = YOURUTAEMAIL
+NAME = LOUISDO
+SID = 1002072156
+EMAIL = LHD2156@MAVS.UTA.EDU
 SEMESTER = SPRING2025
 PROJECT=PROJ03
- 
+VID = https://youtube.com/shorts/4BOTg5Fvmp4?feature=share
 
 ####### DO NOT EDIT BELOW THIS LINE!!! #########
 author: 

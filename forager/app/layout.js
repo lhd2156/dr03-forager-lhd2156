@@ -21,6 +21,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        
+        style={{ backgroundColor: "#F1F3EB" }} // ✅ Ensure background is applied
+
       >
         {children}
         <NavBar />
