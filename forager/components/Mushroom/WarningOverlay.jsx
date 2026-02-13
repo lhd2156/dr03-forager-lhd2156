@@ -2,9 +2,8 @@ import Message from '@/components/Message';
 
 export default function WarningOverlay({ onClose }) {
   return (
-    <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-red-500 text-white p-4 rounded-lg shadow-lg relative w-11/12 max-w-md">
-        {/* Header Row with Warning Icon & Close Button */}
+    <div className="fixed inset-0 flex justify-center items-start pt-20 z-50" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+      <div className="bg-red-500 text-white p-4 rounded-lg shadow-lg w-11/12 max-w-[350px]">
         <div className="flex justify-between items-center">
           <img 
             src="/icons/icon_warning.svg" 
@@ -18,11 +17,7 @@ export default function WarningOverlay({ onClose }) {
             ✖
           </button>
         </div>
-
-        {/* ATTENTION Title Below */}
         <h2 className="text-lg font-bold text-center mt-1">ATTENTION!</h2>
-
-        {/* Warning Message */}
         <p className="mt-2 text-sm leading-tight text-center">
           Our system can make mistakes! Remember to <span className="font-bold">verify</span> important information
           and use your own judgment to determine if any mushroom is safe. Be sure to use the 

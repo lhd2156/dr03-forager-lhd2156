@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import NavBar from "@/components/NavBar";
 import SelectedMushroomCard from "@/components/Mushroom/SelectedMushroomCard";
@@ -13,11 +13,17 @@ import WarningBox from "@/components/Mushroom/WarningBox";
 import MushroomDetails from "@/components/Mushroom/MushroomDetails";
 import CompareButton from "@/components/CompareButton"; 
 
-export default function MushroomPage() {
+function MushroomContent() {
   const searchParams = useSearchParams();
   const mushroomId = parseInt(searchParams.get("id"), 10);
   const [showWarning, setShowWarning] = useState(false);
   const mushroom = mushrooms.find((m) => m.id === mushroomId);
+
+  useEffect(() => {
+    if (mushroomId) {
+      sessionStorage.setItem("lastMushroomId", mushroomId);
+    }
+  }, [mushroomId]);
 
   useEffect(() => {
     if (mushroom?.isToxic && !sessionStorage.getItem(`seenWarning_${mushroomId}`)) {
@@ -40,52 +46,46 @@ export default function MushroomPage() {
 
   return (
     <div className="w-full min-h-screen bg-[#F1F3EB] flex flex-col items-center">
-      {/* Header - Shrunk for Proper Fit */}
       <MushroomHeader className="text-sm py-2" />
-
-      {/* Scrollable Content - Properly Scaled */}
-      <div className="overflow-auto flex flex-col items-center px-2 pb-20 w-full max-w-[340px]">
-        
-        {/* Show Warning Only Once */}
-        {showWarning && <WarningOverlay onClose={handleCloseWarning} className="max-w-[90%] text-sm p-2" />}
-
-        {/* Report Error & Warning Box - Shrunk */}
-        <div className="mt-3 w-full max-w-[320px]">
+      <div className="overflow-auto flex flex-col items-center px-2 pb-20 w-full max-w-[390px]">
+        {showWarning && <WarningOverlay onClose={handleCloseWarning} />}
+        <div className="mt-3 w-full px-4">
           <div className="flex justify-between items-center mb-1">
             <p className="text-gray-600 text-sm">Not what you expected?</p> 
-            <ReportError className="text-xs px-2 py-1" />
+            <ReportError />
           </div>
-          <WarningBox className="text-xs px-2 py-1" />
+          <WarningBox isToxic={mushroom.isToxic} />
         </div>
-
-        {/* Compare Button */}
-        <div className="flex justify-end w-full max-w-[320px] mt-2">
-          <CompareButton className="px-2 py-1 text-xs" />
+        <div className="flex justify-end w-full px-4 mt-2">
+          <CompareButton />
         </div>
-
-        {/* Image & Percentage Match Section - Shrunk */}
-        <div className="relative mt-4 flex flex-col items-center snap-center w-full max-w-[280px]">
-          <SelectedMushroomCard image={mushroom.image} isToxic={mushroom.isToxic} className="max-w-[260px]" />
+        <div className="mt-4 flex justify-center w-full px-4">
+          <SelectedMushroomCard 
+            image={mushroom.image} 
+            isToxic={mushroom.isToxic} 
+            matchPercentage={mushroom.matchPercentage}
+          />
         </div>
-
-        {/* Mushroom Details */}
-        <div className="w-full max-w-[320px]">
+        <div className="w-full px-4 mt-2">
           <MushroomDetails 
             name={mushroom.name} 
             scientificName={mushroom.scientificName} 
             fastFacts={mushroom.fastFacts || { capDiameter: "Unknown", gillColor: "Unknown" }} 
           />
         </div>
-
-        {/* Similar Matches */}
-        <div className="mt-6 w-full max-w-[320px] flex flex-col items-center">
-          <h2 className="text-base font-semibold">Similar Matches</h2>
+        <div className="mt-6 w-full px-4">
           <SimilarMatchList matches={mushrooms.filter(m => m.id !== mushroomId)} />
         </div>
       </div>
-
-      {/* Bottom Navigation */}
       <NavBar />
     </div>
+  );
+}
+
+export default function MushroomPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <MushroomContent />
+    </Suspense>
   );
 }

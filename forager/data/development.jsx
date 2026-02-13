@@ -17,9 +17,19 @@ export const mushrooms = [
   image: "/images/deathcap.jpg",
   favorite: true,
   isToxic: true,
+  matchPercentage: 97,
   regions: ["Texas"],
   categories: ["Poisonous"],
-  fastFacts: { capDiameter: "5-15cm", gillColor: "White" }
+  fastFacts: { capDiameter: "5-15cm", gillColor: "White" },
+  capShape: "Flat",
+  capColor: "Yellow",
+  capTexture: "Smooth",
+  gillType: "Free",
+  gillColor: "White",
+  stemShape: "Slender",
+  stemColor: "White",
+  stemRing: "Absent",
+  habitat: "Near oak/beech",
 },
 {
   id: 2,
@@ -31,7 +41,16 @@ export const mushrooms = [
   matchPercentage: 90,
   regions: ["Asia"],
   categories: ["Medicinal"],
-  fastFacts: { capDiameter: "4-10cm", gillColor: "Pink" }
+  fastFacts: { capDiameter: "4-10cm", gillColor: "Pink" },
+  capShape: "Conical",
+  capColor: "Gray",
+  capTexture: "Smooth",
+  gillType: "Free",
+  gillColor: "Pink",
+  stemShape: "Thick",
+  stemColor: "White",
+  stemRing: "Absent",
+  habitat: "Rice paddies",
 },
 {
   id: 3,
@@ -43,7 +62,16 @@ export const mushrooms = [
   matchPercentage: 80,
   regions: ["North America"],
   categories: ["Poisonous"],
-  fastFacts: { capDiameter: "5-10cm", gillColor: "White" }
+  fastFacts: { capDiameter: "5-10cm", gillColor: "White" },
+  capShape: "Flat",
+  capColor: "White",
+  capTexture: "Smooth",
+  gillType: "Free",
+  gillColor: "White",
+  stemShape: "Slender",
+  stemColor: "White",
+  stemRing: "Present",
+  habitat: "Deciduous forests",
 },
 {
   id: 4,
@@ -55,7 +83,16 @@ export const mushrooms = [
   matchPercentage: 70,
   regions: ["Europe"],
   categories: ["Mythical"],
-  fastFacts: { capDiameter: "4-12cm", gillColor: "Cream" }
+  fastFacts: { capDiameter: "4-12cm", gillColor: "Cream" },
+  capShape: "Flat",
+  capColor: "Pale Yellow",
+  capTexture: "Smooth",
+  gillType: "Free",
+  gillColor: "Cream",
+  stemShape: "Slender",
+  stemColor: "White",
+  stemRing: "Present",
+  habitat: "Woodland edges",
 },
 {
   id: 5,
@@ -67,8 +104,17 @@ export const mushrooms = [
   matchPercentage: 60,
   regions: ["Africa"],
   categories: ["Good for Broths"],
-  fastFacts: { capDiameter: "3-8cm", gillColor: "White" }
-}
+  fastFacts: { capDiameter: "3-8cm", gillColor: "White" },
+  capShape: "Round",
+  capColor: "White",
+  capTexture: "Spiky",
+  gillType: "None",
+  gillColor: "White",
+  stemShape: "Stubby",
+  stemColor: "White",
+  stemRing: "Absent",
+  habitat: "Grasslands",
+},
 ];
 
 export const filterLists = [
@@ -101,24 +147,17 @@ export const filterLists = [
   },
 ];
 
-/**
-* Function to filter mushrooms based on active filters
-* @param {Array} filters - Active filters selected by the user
-* @returns {Array} - Filtered list of mushrooms
-*/
 export function filterMushrooms(filters) {
   if (filters.length === 0) {
-      return mushrooms; // Show all if no filters are active
+    return mushrooms;
   }
-
   return mushrooms.filter(mushroom =>
-      filters.some(filter =>
-          mushroom.regions.includes(filter) ||
-          mushroom.categories.includes(filter) ||
-          (filter === "Favorites" && mushroom.favorite)
-      )
+    filters.some(filter =>
+      mushroom.regions.includes(filter) ||
+      mushroom.categories.includes(filter) ||
+      (filter === "Favorites" && mushroom.favorite)
+    )
   );
 }
 
-// More than one export.
-export { warningMessage, dummyData, mushrooms, filterLists }; 
+export { warningMessage, dummyData };
